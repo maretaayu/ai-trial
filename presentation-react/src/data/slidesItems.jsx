@@ -429,10 +429,19 @@ export const slidesData = [
     {
         component: <SlideOutputPreview
             type="video"
-            title="Video Ringkasan (Audio Overview)."
-            subtitle="Dengarkan draf proposal Anda dalam format podcast atau tonton ringkasan video interaktif untuk mobilitas tinggi."
+            title="Video Ringkasan."
+            subtitle="Tonton ringkasan video interaktif untuk mendapatkan gambaran cepat isi proposal bagi mitra bisnis."
             mediaSrc="/out-video.mp4"
             isVideo={true}
+        />, isDark: false
+    },
+    {
+        component: <SlideOutputPreview
+            type="podcast"
+            title="Audio Overview (Podcast)."
+            subtitle="Ubah draf narasi menjadi diskusi audio ala podcast untuk didengarkan secara mobile selama perjalanan."
+            mediaSrc="/out-podcast.m4a"
+            isAudio={true}
         />, isDark: false
     },
     {
