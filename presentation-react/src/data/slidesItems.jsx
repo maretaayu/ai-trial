@@ -20,6 +20,13 @@ import { SlideAIMatrix } from '../components/slides/SlideAIMatrix';
 import SlideAgenticCommerce from '../components/slides/SlideAgenticCommerce';
 import SlideAgenticConcept from '../components/slides/SlideAgenticConcept';
 import SlideNotebookLMDemo from '../components/slides/SlideNotebookLMDemo';
+import SlideBankingOpportunity from '../components/slides/SlideBankingOpportunity';
+import SlideBankingUseCases from '../components/slides/SlideBankingUseCases';
+import SlideBankingAIMatrix from '../components/slides/SlideBankingAIMatrix';
+import SlideAgenticBanking from '../components/slides/SlideAgenticBanking';
+import SlideBankingROI from '../components/slides/SlideBankingROI';
+import SlideAIIntro from '../components/slides/SlideAIIntro';
+import SlideAIComparison from '../components/slides/SlideAIComparison';
 
 /* ───────────────────────────────────────────────
    SPECIAL SLIDE COMPONENTS (inline, one-off)
@@ -35,12 +42,12 @@ const SlideOutline = () => (
             <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 mb-12">What We'll Cover.</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {[
-                    { num: "01", title: "Introduction", desc: "Then vs Now — why the way people work is fundamentally changing." },
-                    { num: "02", title: "AI Trends 2026", desc: "The global shift from AI assistants to Agentic AI systems." },
-                    { num: "03", title: "AI Tools Landscape", desc: "Mapping categories & tools your teams can adopt today." },
-                    { num: "04", title: "Cross-Dept Use Cases", desc: "HR, Marketing, Finance, Customer Service in action." },
-                    { num: "05", title: "Data Security & PDP Law", desc: "Guardrails for responsible enterprise AI adoption." },
-                    { num: "06", title: "Live Demo: NotebookLM", desc: "Document intelligence that reads your internal knowledge base." },
+                    { num: "01", title: "Introduction", desc: "What is AI — types, evolution, and why the mindset must shift." },
+                    { num: "02", title: "Banking & AI", desc: "Why financial services leads in global AI adoption." },
+                    { num: "03", title: "AI Trends 2026", desc: "From Predictive to Agentic AI — what's changed in banking." },
+                    { num: "04", title: "AI Tools Landscape", desc: "Mapping categories & tools your teams can adopt today." },
+                    { num: "05", title: "Use Cases", desc: "Banking segments and cross-department AI in action." },
+                    { num: "06", title: "Security & Live Demo", desc: "Data guardrails, UU PDP compliance, and NotebookLM demo." },
                 ].map((item) => (
                     <div key={item.num} className="flex items-start gap-5 p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-lg hover:shadow-gray-100 transition-all group">
                         <span className="text-3xl font-black text-gray-200 group-hover:text-gray-900 transition-colors leading-none mt-1">{item.num}</span>
@@ -165,23 +172,25 @@ const SlideToolsGrid = () => {
 export const slidesData = [
 
     // ══════════════════════════════════════════════════════════
-    // ACT 1 — HOOK: COVER + AGENDA
+    // COVER + AGENDA
     // ══════════════════════════════════════════════════════════
     { component: <Slide1Title />, isDark: false },
     { component: <SlideOutline />, isDark: false },
 
     // ══════════════════════════════════════════════════════════
-    // ACT 2 — WHY: THE WORLD HAS CHANGED
+    // CH 1 — INTRODUCTION: WHAT IS AI?
     // ══════════════════════════════════════════════════════════
     {
         component: <ChapterSlide
             number="1"
             chapter="Introduction"
-            title="The World Has Changed."
-            subtitle="AI is not the next software upgrade. It's a once-in-a-generation shift in how humans interact with knowledge and work itself."
+            title="What is AI, Really?"
+            subtitle="Before diving into tools and trends, let's ground ourselves in the basics — what AI is, how it's evolved, and why it matters now more than ever."
         />, isDark: true
     },
 
+    { component: <SlideAIIntro />, isDark: false },
+    { component: <SlideAIComparison />, isDark: false },
     { component: <SlideThenVsNow />, isDark: false },
 
     {
@@ -206,11 +215,26 @@ export const slidesData = [
     },
 
     // ══════════════════════════════════════════════════════════
-    // ACT 3 — AI TRENDS 2026: THE 3 LEVELS
+    // CH 2 — BANKING & AI OPPORTUNITY
     // ══════════════════════════════════════════════════════════
     {
         component: <ChapterSlide
             number="2"
+            chapter="Banking & AI"
+            title="The Banking AI Opportunity."
+            subtitle="Financial services is one of the fastest AI adopters globally — and the economic potential across every banking segment is enormous."
+        />, isDark: true
+    },
+
+    { component: <SlideBankingOpportunity />, isDark: false },
+    { component: <SlideBankingUseCases />, isDark: false },
+
+    // ══════════════════════════════════════════════════════════
+    // CH 3 — AI TRENDS 2026
+    // ══════════════════════════════════════════════════════════
+    {
+        component: <ChapterSlide
+            number="3"
             chapter="AI Trends 2026"
             title="The Era of Agentic AI."
             subtitle="Based on Google Cloud's 2026 AI Agent Trends Report — the industry has moved well past conversational assistants."
@@ -218,8 +242,9 @@ export const slidesData = [
     },
 
     { component: <Slide3Tangga />, isDark: false },
+    { component: <SlideBankingAIMatrix />, isDark: false },
+    { component: <SlideAgenticBanking />, isDark: false },
 
-    // STAT: 52% — AI agents already in production
     {
         component: <StatSlide
             stat="52%"
@@ -235,11 +260,11 @@ export const slidesData = [
     },
 
     // ══════════════════════════════════════════════════════════
-    // ACT 4 — TOOLS LANDSCAPE: WHAT'S OUT THERE
+    // CH 4 — AI TOOLS LANDSCAPE
     // ══════════════════════════════════════════════════════════
     {
         component: <ChapterSlide
-            number="3"
+            number="4"
             chapter="AI Tools Landscape"
             title="Know Your Tools."
             subtitle="Not all AI tools are the same. Each category serves a distinct organizational need — from workspace productivity to creative content, research to code."
@@ -268,32 +293,27 @@ export const slidesData = [
 
     { component: <SlideDivisionMapping />, isDark: false },
 
-
-
-    // ── Chapter 4: Use Cases ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════
+    // CH 5 — USE CASES
+    // ══════════════════════════════════════════════════════════
     {
         component: <ChapterSlide
-            number="4"
+            number="5"
             chapter="Use Cases — Every Department"
             title="AI in Action."
             subtitle="These are not hypothetical pilot projects. These are things your teams can start doing this week."
         />, isDark: true
     },
 
-    // ── Overview Matrix: AI × Department ─────────────────────────────────
     { component: <SlideAIMatrix />, isDark: false },
-
-    // ── Department Use Case Slides (Before → After) ───────────────────────
     { component: <SlideUseCaseMarketing />, isDark: false },
     { component: <SlideUseCaseHR />, isDark: false },
-    { component: <SlideUseCaseFinance />, isDark: false },
     { component: <SlideAgenticCommerce />, isDark: false },
     { component: <SlideUseCaseSales />, isDark: false },
     { component: <SlideUseCaseIT />, isDark: false },
     { component: <SlideUseCaseCS />, isDark: false },
+    { component: <SlideBankingROI />, isDark: false },
 
-
-    // STAT: 88% ROI
     {
         component: <StatSlide
             stat="88%"
@@ -309,11 +329,11 @@ export const slidesData = [
     },
 
     // ══════════════════════════════════════════════════════════
-    // ACT 6 — GUARDRAILS: DATA SECURITY & UU PDP
+    // CH 6 — DATA SECURITY & GOVERNANCE
     // ══════════════════════════════════════════════════════════
     {
         component: <ChapterSlide
-            number="5"
+            number="6"
             chapter="Data Security & Governance"
             title="Speed Needs Strong Guardrails."
             subtitle="Autonomous systems require formal accountability frameworks. AI governance is not optional — it's the foundation."
@@ -367,13 +387,12 @@ export const slidesData = [
         />, isDark: false
     },
 
-
     // ══════════════════════════════════════════════════════════
-    // ACT 8 — LIVE DEMO: NOTEBOOKLM
+    // CH 7 — LIVE DEMO: NOTEBOOKLM
     // ══════════════════════════════════════════════════════════
     {
         component: <ChapterSlide
-            number="6"
+            number="7"
             chapter="Live Demo"
             title="NotebookLM in Action."
             subtitle="Turn a stack of unmanageable company documents into an intelligent, citable Q&A engine — in minutes."
