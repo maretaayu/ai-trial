@@ -9,7 +9,7 @@ export default function Slide1Title() {
 
                 {/* Very compact sophisticated badge */}
                 <div className="inline-flex items-center justify-center gap-3 border border-gray-200 bg-white/50 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-[0.25em] text-gray-500 uppercase mb-8 sm:mb-12 shadow-sm">
-                    <span>Enterprise Training</span>
+                    <span>AI Trial Session</span>
                     <span className="w-1 h-1 rounded-full bg-gray-300"></span>
                     <span>2026</span>
                 </div>
@@ -21,11 +21,16 @@ export default function Slide1Title() {
 
                 {/* Clean, short subheading */}
                 <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed tracking-tight">
-                    Membangun pemahaman <span className="text-gray-900 font-bold">Agentic AI</span> untuk organisasi otonom.
+                    From <span className="text-gray-900 font-bold">trends & tools</span> to <span className="text-gray-900 font-bold">real-world use cases</span> and responsible AI adoption.
                 </p>
 
                 {/* Minimal line separator */}
                 <div className="w-8 h-[2px] bg-gray-900 mt-10 rounded-full"></div>
+
+                {/* Attribution */}
+                <p className="text-xs font-semibold tracking-[0.2em] text-gray-400 uppercase mt-4">
+                    By Ruangguru Engineering Academy
+                </p>
 
             </div>
         </div>

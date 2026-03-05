@@ -217,42 +217,6 @@ export const slidesData = [
         />, isDark: true
     },
 
-    {
-        component: <SplitSlide
-            label="Level 1 of 3"
-            title="LLMs as Chat Tools."
-            subtitle="Where most organizations start — and unfortunately stay."
-            points={[
-                { title: "How it works", desc: "Employees open a browser tab, type a question, copy the response, and paste it into another app manually.", icon: Code },
-                { title: "The hidden risk", desc: "Sensitive data (payroll, client names) is frequently pasted into public AI systems — an unintentional data breach in the making.", icon: TriangleAlert }
-            ]}
-        />, isDark: false
-    },
-
-    {
-        component: <SplitSlide
-            label="Level 2 of 3"
-            title="AI Agents as Smart Assistants."
-            subtitle="Where your enterprise should be operating today."
-            points={[
-                { title: "Integrated into your tools", desc: "AI operates inside MS Excel, Word, Teams, or Google Docs. It reads the actual content of your documents — not a public web search.", icon: Layers },
-                { title: "Context-aware responses", desc: "Instead of generic answers, the AI responds based on your internal data: SOPs, HR policies, financial records.", icon: Boxes }
-            ]}
-        />, isDark: false
-    },
-
-    {
-        component: <SplitSlide
-            label="Level 3 of 3"
-            title="Agentic AI: Autonomous Execution."
-            subtitle="The 2026 enterprise standard — multi-agent coordination across systems."
-            points={[
-                { title: "End-to-End Automation", desc: "Multiple specialized agents collaborate: one pulls data, another drafts content, another sends it — without human intervention per step.", icon: Workflow },
-                { title: "Minimal Human Touchpoints", desc: "A manager reviews and approves final outputs. The digital assembly line runs itself from trigger to resolution.", icon: CheckCircle2 }
-            ]}
-        />, isDark: false
-    },
-
     { component: <Slide3Tangga />, isDark: false },
 
     // STAT: 52% — AI agents already in production
