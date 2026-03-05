@@ -20,6 +20,7 @@ import { SlideAIMatrix } from '../components/slides/SlideAIMatrix';
 import SlideAgenticCommerce from '../components/slides/SlideAgenticCommerce';
 import SlideAgenticConcept from '../components/slides/SlideAgenticConcept';
 import SlideNotebookLMDemo from '../components/slides/SlideNotebookLMDemo';
+import { SlideOutputPreview } from '../components/slides/SlideOutputPreview';
 import SlideBankingOpportunity from '../components/slides/SlideBankingOpportunity';
 import SlideBankingUseCases from '../components/slides/SlideBankingUseCases';
 import SlideBankingAIMatrix from '../components/slides/SlideBankingAIMatrix';
@@ -27,6 +28,7 @@ import SlideAgenticBanking from '../components/slides/SlideAgenticBanking';
 import SlideBankingROI from '../components/slides/SlideBankingROI';
 import SlideAIIntro from '../components/slides/SlideAIIntro';
 import SlideReferences from '../components/slides/SlideReferences';
+import SlideFeedback from '../components/slides/SlideFeedback';
 
 /* ───────────────────────────────────────────────
    SPECIAL SLIDE COMPONENTS (inline, one-off)
@@ -400,6 +402,57 @@ export const slidesData = [
         />, isDark: false
     },
 
+    {
+        component: <ChapterSlide
+            number="+"
+            chapter="Preview"
+            title="Potensi Output NotebookLM."
+            subtitle="Sebelum masuk ke langkah teknis, mari kita intip berbagai format output strategis yang bisa dihasilkan secara instan."
+        />, isDark: true
+    },
+    {
+        component: <SlideOutputPreview
+            type="infografis"
+            title="Infografis Strategis."
+            subtitle="Ringkasan visual dari tumpukan dokumen yang memudahkan pemahaman cepat bagi pemangku kepentingan."
+            mediaSrc="/out-infografis.png"
+        />, isDark: false
+    },
+    {
+        component: <SlideOutputPreview
+            type="mindmap"
+            title="Mind Map Transformasi."
+            subtitle="Pemetaan alur kerja dan keterkaitan antar departemen dalam satu bagan logika yang solid."
+            mediaSrc="/out-mindmap.png"
+        />, isDark: false
+    },
+    {
+        component: <SlideOutputPreview
+            type="video"
+            title="Video Ringkasan (Audio Overview)."
+            subtitle="Dengarkan draf proposal Anda dalam format podcast atau tonton ringkasan video interaktif untuk mobilitas tinggi."
+            mediaSrc="/out-video.mp4"
+            isVideo={true}
+        />, isDark: false
+    },
+    {
+        component: <SlideOutputPreview
+            type="sheets"
+            title="Penyelarasan Data (Sheets)."
+            subtitle="Ekstraksi data terstruktur dari draf narasi langsung ke format spreadsheet untuk analisis lanjutan."
+            mediaSrc="/out-sheets.png"
+            link="https://docs.google.com/spreadsheets/d/1jUx5xB3Znqj7xLajD9cqAjwhFAeE7vvsUgV2gB7GHjI/edit?usp=sharing"
+        />, isDark: false
+    },
+    {
+        component: <SlideOutputPreview
+            type="ppt"
+            title="Draft Presentasi (Slide Deck)."
+            subtitle="Konversi instan dari draf proposal menjadi kerangka slide presentasi yang siap dipoles."
+            mediaSrc="/out-ppt.png"
+            link="https://drive.google.com/file/d/1BmJ-StCrdAO_ftsRkQk_c4q7yxRYSwVK/view?usp=sharing"
+        />, isDark: false
+    },
     { component: <SlideNotebookLMDemo />, isDark: false },
 
     // ══════════════════════════════════════════════════════════
@@ -415,4 +468,5 @@ export const slidesData = [
     },
 
     { component: <SlideReferences />, isDark: false },
+    { component: <SlideFeedback />, isDark: false },
 ];
