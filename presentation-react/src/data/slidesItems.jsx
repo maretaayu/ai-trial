@@ -389,12 +389,12 @@ export const slidesData = [
 
     {
         component: <SplitSlide
-            label="The Problem (Study Case)"
-            title="20 overlapping policy PDFs."
-            subtitle="A real challenge for HR and Legal teams in most organizations."
+            label="Studi Kasus"
+            title="Menyusun Business Proposal."
+            subtitle="Tantangan nyata bagi tim sales, marketing, dan strategis di sebagian besar organisasi."
             points={[
-                { title: "The Situation", desc: "Your HR team needs to answer: 'Which version of the leave policy applies to contract employees hired after Jan 2024?'", icon: FileText },
-                { title: "The Old Way", desc: "Open each PDF one by one, Ctrl+F for keywords, then cross-reference versions manually — taking hours and still prone to error.", icon: Clock }
+                { title: "Situasi", desc: "Tim Anda harus membuat proposal spesifik untuk klien baru berdasarkan puluhan dokumen referensi (profil perusahaan, produk, peraturan, studi kasus) secara cepat.", icon: FileText },
+                { title: "Cara Lama", desc: "Membuka PDF satu per satu, mencari kata kunci secara manual (Ctrl+F), membaca, lalu merangkai proposal dari nol — memakan waktu berjam-jam dan rawan tidak relevan.", icon: Clock }
             ]}
         />, isDark: false
     },
