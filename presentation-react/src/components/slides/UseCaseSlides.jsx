@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     Megaphone, Users, TrendingUp, Cpu, HeadphonesIcon,
-    Briefcase, ArrowRight, Zap, Clock, CheckCircle2
+    Briefcase, ArrowRight, Zap, Clock, CheckCircle2,
+    Database, Search, Layout, BarChart3, Quote, Target, FileText
 } from 'lucide-react';
 
 // ── Shared helpers ───────────────────────────────────────────────────────────
@@ -310,4 +311,140 @@ export const SlideUseCaseCS = () => (
             { name: "NotebookLM", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/320px-Google_2015_logo.svg.png" },
         ]}
     />
+);
+// ══════════════════════════════════════════════════════════════════════════════
+// NEW PREMIUM MARKETING SLIDES
+// ══════════════════════════════════════════════════════════════════════════════
+
+export const Slide10xMarketing = () => (
+    <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full max-w-6xl mx-auto px-8 flex flex-col md:flex-row gap-12 items-center">
+            <div className="w-full md:w-[60%]">
+                <p className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-4">• USE CASE: MARKETING</p>
+                <h2 className="text-6xl font-black tracking-tighter text-gray-900 mb-8 leading-[1]">
+                    The 10x Marketing Manager.
+                </h2>
+                <p className="text-gray-500 text-lg leading-relaxed mb-10 font-medium">
+                    A marketing manager’s job used to be a constant scramble of drafting posts and pulling data. In 2026, they orchestrate a system of specialized AI agents.
+                </p>
+            </div>
+            <div className="w-full md:w-[40%] flex flex-col gap-8">
+                <div className="flex gap-5 items-start">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                        <Target className="w-5 h-5 text-gray-600" />
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-gray-900 text-xl mb-2">Shift to orchestration</h3>
+                        <p className="text-gray-500 text-sm leading-relaxed">
+                            With agents focusing on specific tasks, the marketing manager can multiply their output by focusing on high-impact strategy and brand storytelling.
+                        </p>
+                    </div>
+                </div>
+                <div className="flex gap-5 items-start">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                        <Users className="w-5 h-5 text-gray-600" />
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-gray-900 text-xl mb-2">Democratization of AI</h3>
+                        <p className="text-gray-500 text-sm leading-relaxed">
+                            Tools like Gemini Enterprise allow knowledge workers to build their own agents, instead of relying solely on IT.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+export const SlideSpecializedAgents = () => (
+    <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full max-w-6xl mx-auto px-8">
+            <div className="flex flex-col md:flex-row gap-12 items-center">
+                <div className="w-full md:w-[55%]">
+                    <p className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-4">• ORCHESTRATION</p>
+                    <h2 className="text-5xl font-black tracking-tighter text-gray-900 mb-6 leading-[1.1]">
+                        The specialized agent system.
+                    </h2>
+                    <p className="text-gray-500 text-base leading-relaxed mb-10">
+                        Their new role involves orchestrating five specialized agents:
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-8">
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-3">
+                                <span className="p-2 bg-gray-100 rounded-lg"><Database className="w-4 h-4 text-gray-600" /></span>
+                                <h3 className="font-bold text-gray-900 text-base">Data agent</h3>
+                            </div>
+                            <p className="text-xs text-gray-500 leading-relaxed pl-11">Sifts through millions of data points to find actionable patterns in market trends.</p>
+                        </div>
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-3">
+                                <span className="p-2 bg-gray-100 rounded-lg"><Search className="w-4 h-4 text-gray-600" /></span>
+                                <h3 className="font-bold text-gray-900 text-base">Analyst agent</h3>
+                            </div>
+                            <p className="text-xs text-gray-500 leading-relaxed pl-11">Monitors market trends and competitor announcements 24/7, delivering a 1-page daily report.</p>
+                        </div>
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-3">
+                                <span className="p-2 bg-gray-100 rounded-lg"><FileText className="w-4 h-4 text-gray-600" /></span>
+                                <h3 className="font-bold text-gray-900 text-base">Content agent</h3>
+                            </div>
+                            <p className="text-xs text-gray-500 leading-relaxed pl-11">Drafts social media copy and blog articles in the brand voice for manager review.</p>
+                        </div>
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-3">
+                                <span className="p-2 bg-gray-100 rounded-lg"><Layout className="w-4 h-4 text-gray-600" /></span>
+                                <h3 className="font-bold text-gray-900 text-base">Creative agent</h3>
+                            </div>
+                            <p className="text-xs text-gray-500 leading-relaxed pl-11">Generates images and videos based on strategic guidelines to accompany posts.</p>
+                        </div>
+                        <div className="space-y-2 col-span-2">
+                            <div className="flex items-center gap-3">
+                                <span className="p-2 bg-gray-100 rounded-lg"><BarChart3 className="w-4 h-4 text-gray-600" /></span>
+                                <h3 className="font-bold text-gray-900 text-base">Reporting agent</h3>
+                            </div>
+                            <p className="text-xs text-gray-500 leading-relaxed pl-11">Pulls and analyzes weekly campaign data, delivering a summary of key insights every Friday.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="w-full md:w-[45%] relative">
+                    <img
+                        src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d5?auto=format&fit=crop&w=800&q=80"
+                        alt="Specialized Agents"
+                        className="rounded-[40px] shadow-2xl grayscale-[0.2] hover:grayscale-0 transition-all duration-700"
+                    />
+                    <div className="absolute -bottom-6 -left-6 bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-white/20 shadow-xl max-w-[280px]">
+                        <div className="flex items-center gap-2 mb-2 font-black text-[10px] text-amber-500 uppercase tracking-widest">
+                            <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                            DATA TIP
+                        </div>
+                        <p className="text-xs text-gray-700 leading-relaxed font-medium mb-4">
+                            Struktur multijenjang ini bertindak sebagai alat pelipatgandaan ("intelligence multiplier").
+                        </p>
+                        <button className="w-full py-2 bg-gray-800 hover:bg-black text-[10px] font-bold text-white rounded-full transition-colors">
+                            Pelajari Selengkapnya
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+export const SlideHiroyukiQuote = () => (
+    <div className="w-full h-full flex items-center justify-center p-12">
+        <div className="max-w-4xl relative">
+            <Quote className="absolute -top-16 -left-20 w-32 h-32 text-gray-100 -z-10" />
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-[1.2] mb-12">
+                "As roles shift to agent management, enabling employees is vital. Democratization via tools like Gemini Enterprise allows knowledge workers to build agents, improving productivity and elevating partnerships to focus on complex, long-term initiatives."
+            </h2>
+            <div className="flex flex-col">
+                <h3 className="text-3xl font-black tracking-tighter text-gray-900">Hiroyuki Koike</h3>
+                <p className="text-sm font-bold text-gray-400 tracking-wide uppercase">
+                    Managing Director, Customer Engineering, Japan, Google Cloud
+                </p>
+            </div>
+        </div>
+    </div>
 );
