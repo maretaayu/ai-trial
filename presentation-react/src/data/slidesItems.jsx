@@ -26,7 +26,6 @@ import SlideBankingAIMatrix from '../components/slides/SlideBankingAIMatrix';
 import SlideAgenticBanking from '../components/slides/SlideAgenticBanking';
 import SlideBankingROI from '../components/slides/SlideBankingROI';
 import SlideAIIntro from '../components/slides/SlideAIIntro';
-import SlideAIComparison from '../components/slides/SlideAIComparison';
 
 /* ───────────────────────────────────────────────
    SPECIAL SLIDE COMPONENTS (inline, one-off)
@@ -255,7 +254,6 @@ export const slidesData = [
         />, isDark: true
     },
 
-    { component: <SlideAIComparison />, isDark: false },
     { component: <Slide3Tangga />, isDark: false },
     { component: <SlideAgenticBanking />, isDark: false },
 
