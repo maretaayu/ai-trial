@@ -407,9 +407,9 @@ export const slidesData = [
     // ══════════════════════════════════════════════════════════
     {
         component: <BigStatementSlide
-            eyebrow="Google Cloud · AI Agent Trends 2026 · p.38"
+            eyebrow="Conclusion"
             statement="Upskilling talent will be the ultimate driver of business value."
-            body="It is tempting to focus on the technology—the models, the platforms, and the prompts—but this misses the most critical element: the people. The half-life of a professional skill is now 4 years—and in tech, as short as two years."
+            body="Technology is the tool, but people are the orchestrators. Long-term success in the AI era depends on how effectively teams collaborate with and direct these new agents."
             source="Source: Google Cloud AI Agent Trends 2026 Report"
         />, isDark: true
     },
