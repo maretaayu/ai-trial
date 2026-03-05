@@ -42,12 +42,12 @@ const SlideOutline = () => (
             <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 mb-12">What We'll Cover.</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {[
-                    { num: "01", title: "Introduction", desc: "What is AI — types, evolution, and why the mindset must shift." },
-                    { num: "02", title: "Banking & AI", desc: "Why financial services leads in global AI adoption." },
-                    { num: "03", title: "AI Trends 2026", desc: "From Predictive to Agentic AI — what's changed in banking." },
-                    { num: "04", title: "AI Tools Landscape", desc: "Mapping categories & tools your teams can adopt today." },
-                    { num: "05", title: "Use Cases", desc: "Banking segments and cross-department AI in action." },
-                    { num: "06", title: "Security & Live Demo", desc: "Data guardrails, UU PDP compliance, and NotebookLM demo." },
+                    { num: "01", title: "Introduction", desc: "What is AI and why the mindset must shift." },
+                    { num: "02", title: "Banking & AI", desc: "Why financial services leads in AI adoption." },
+                    { num: "03", title: "The Era of Agentic AI", desc: "From Predictive to Agentic workflows." },
+                    { num: "04", title: "Tools Landscape", desc: "Mapping AI categories & everyday tools." },
+                    { num: "05", title: "Security & Governance", desc: "Data guardrails, UU PDP, and Human-in-the-loop." },
+                    { num: "06", title: "Live Demo", desc: "Enterprise knowledge with NotebookLM." },
                 ].map((item) => (
                     <div key={item.num} className="flex items-start gap-5 p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-lg hover:shadow-gray-100 transition-all group">
                         <span className="text-3xl font-black text-gray-200 group-hover:text-gray-900 transition-colors leading-none mt-1">{item.num}</span>
@@ -185,12 +185,11 @@ export const slidesData = [
             number="1"
             chapter="Introduction"
             title="What is AI, Really?"
-            subtitle="Before diving into tools and trends, let's ground ourselves in the basics — what AI is, how it's evolved, and why it matters now more than ever."
+            subtitle="Before diving into tools, let's ground ourselves in the basics — what AI is, and why it matters now more than ever."
         />, isDark: true
     },
 
     { component: <SlideAIIntro />, isDark: false },
-    { component: <SlideAIComparison />, isDark: false },
     { component: <SlideThenVsNow />, isDark: false },
 
     {
@@ -228,9 +227,24 @@ export const slidesData = [
 
     { component: <SlideBankingOpportunity />, isDark: false },
     { component: <SlideBankingUseCases />, isDark: false },
+    { component: <SlideBankingAIMatrix />, isDark: false },
+
+    {
+        component: <StatSlide
+            stat="88%"
+            statLabel="of organizations using AI agents report a measurable ROI within the first year of deployment."
+            breakdowns={[
+                { pct: "4.1×", label: "average ROI for agentic AI workflows" },
+                { pct: "74%", label: "report improved employee satisfaction" },
+                { pct: "68%", label: "report faster decision-making across depts." },
+                { pct: "61%", label: "reduced operational cost within 6 months" },
+            ]}
+            source="Source: Google Cloud, The ROI of AI, 2025"
+        />, isDark: true
+    },
 
     // ══════════════════════════════════════════════════════════
-    // CH 3 — AI TRENDS 2026
+    // CH 3 — THE ERA OF AGENTIC AI
     // ══════════════════════════════════════════════════════════
     {
         component: <ChapterSlide
@@ -241,8 +255,8 @@ export const slidesData = [
         />, isDark: true
     },
 
+    { component: <SlideAIComparison />, isDark: false },
     { component: <Slide3Tangga />, isDark: false },
-    { component: <SlideBankingAIMatrix />, isDark: false },
     { component: <SlideAgenticBanking />, isDark: false },
 
     {
@@ -267,7 +281,7 @@ export const slidesData = [
             number="4"
             chapter="AI Tools Landscape"
             title="Know Your Tools."
-            subtitle="Not all AI tools are the same. Each category serves a distinct organizational need — from workspace productivity to creative content, research to code."
+            subtitle="Not all AI tools are the same. Let's look at the broad categories serving everyday organizational needs."
         />, isDark: true
     },
 
@@ -278,6 +292,90 @@ export const slidesData = [
     { component: <SlideVibeCoding />, isDark: false },
     { component: <SlideDataAnalysis />, isDark: false },
     { component: <SlideMeetingAI />, isDark: false },
+    { component: <SlideDivisionMapping />, isDark: false },
+
+    // ══════════════════════════════════════════════════════════
+    // CH 5 — UU PDP & TATA KELOLA
+    // ══════════════════════════════════════════════════════════
+    {
+        component: <ChapterSlide
+            number="5"
+            chapter="UU PDP & Tata Kelola"
+            title="Regulasi & Keamanan Data."
+            subtitle="Implementasi AI di perbankan bukan sekadar urusan teknologi, melainkan juga kepatuhan pada regulasi OJK & pelindungan data."
+        />, isDark: true
+    },
+
+    {
+        component: <BigStatementSlide
+            eyebrow="Fondasi Regulasi"
+            statement="Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP)."
+            body="Seluruh implementasi AI di perbankan wajib didasarkan pada UU PDP untuk memastikan pengelolaan data nasabah yang sensitif dilakukan secara bertanggung jawab, aman, dan mutlak melindungi hak privasi nasabah."
+            source="Referensi: Roadmap OJK - Tata Kelola Kecerdasan Artifisial Perbankan Indonesia"
+        />, isDark: true
+    },
+
+    { component: <Slide5Security />, isDark: false },
+
+    {
+        component: <SplitSlide
+            label="Langkah Praktis"
+            title="Implementasi UU PDP."
+            subtitle="Tindakan nyata yang harus diamankan dalam alur kerja sistem AI."
+            points={[
+                { title: "Identifikasi & Persetujuan (Consent)", desc: "Klasifikasi jenis data yang dikelola model AI dan pastikan ada persetujuan yang eksplisit dari nasabah sebelum data mereka masuk ke dalam siklus analitik AI.", icon: CheckCircle2 },
+                { title: "Hak Nasabah & Zero Data Leakage", desc: "Jaga keamanan data via manajemen akses ketat. Nasabah harus memiliki hak final untuk mengakses, memperbaiki, atau menghapus datanya (Right to be Forgotten).", icon: Lock }
+            ]}
+        />, isDark: false
+    },
+
+    {
+        component: <SplitSlide
+            label="Struktur Organisasi"
+            title="Sinergi Komite AI."
+            subtitle="Penyelarasan mandat bisnis, risiko keamanan, dan teknologi."
+            points={[
+                { title: "Mandat Komite AI", desc: "Bank disarankan memiliki tim khusus (atau komite di bawah Pengarah TI) untuk menjamin adopsi AI tetap pada rel rencana strategis perbankan dan panduan standar etika.", icon: Users },
+                { title: "Kepatuhan POJK No. 17/2023", desc: "Lembaga komite bertugas memantau kepatuhan bahwa integrasi sistem, vendor AI maupun pengembangan in-house tetap tegak lurus dengan regulasi tata kelola teknologi informasi (PTI) pilar OJK.", icon: Scale }
+            ]}
+        />, isDark: false
+    },
+
+    {
+        component: <SplitSlide
+            label="Rekomendasi Keamanan"
+            title="Mitigasi Risiko Publik."
+            subtitle="Praktik fundamental yang secara mutlak perlu diimplementasikan agar tidak terjadi kasus kebocoran seperti institusi lain."
+            points={[
+                { title: "Lisensi Enterprise (Zero Retention)", desc: "Wajib menggunakan akun/langganan Enterprise (seperti M365 Copilot, Vertex AI) agar secara legal vendor dilarang menyedot data bank Anda untuk melatih model AI publik mereka.", icon: Key },
+                { title: "Anonimisasi Sistematis (De-identifikasi)", desc: "Wajib adanya protokol ketat untuk menyembunyikan (masking) identitas seperti NIK, nama lengkap, dan rekening nasabah sebelum operasional masuk ke layer analisis AI.", icon: EyeOff }
+            ]}
+        />, isDark: false
+    },
+
+    {
+        component: <SplitSlide
+            label="Pengawasan & Cyber Threat"
+            title="Keamanan Siber In-the-Loop."
+            subtitle="Membangun instrumen pertahanan ganda: dari limitasi otoritas mesin hingga kemampuan deteksi dini."
+            points={[
+                { title: "Pengawasan Manusia (Human Oversight)", desc: "Pertegas batas otoritas mesin. Karyawan dituntut wajib bisa mengidentifikasi momen yang tepat untuk melakukan validasi, intervensi, maupun koreksi atas hasil kalkulasi algoritma AI.", icon: ShieldCheck },
+                { title: "Kenali Ancaman AI Spesifik", desc: "Karyawan wajib dilatih mengenali eskalasi serangan era baru (Prompt Injection atau Training Data Poisoning) serta pemahaman tajam pada prosedur eskalasi insiden jaringan AI.", icon: TriangleAlert }
+            ]}
+        />, isDark: false
+    },
+
+    // ══════════════════════════════════════════════════════════
+    // CH 6 — LIVE DEMO: NOTEBOOKLM
+    // ══════════════════════════════════════════════════════════
+    {
+        component: <ChapterSlide
+            number="6"
+            chapter="Live Demo"
+            title="NotebookLM in Action."
+            subtitle="Turn a stack of unmanageable company documents into an intelligent, citable Q&A engine — in minutes."
+        />, isDark: true
+    },
 
     {
         component: <SplitSlide
@@ -289,114 +387,6 @@ export const slidesData = [
                 { title: "Audio Overviews", desc: "Upload a 50-page policy document and get a listenable podcast-style briefing. Perfect for leadership on the go.", icon: Headphones }
             ]}
         />, isDark: false
-    },
-
-    { component: <SlideDivisionMapping />, isDark: false },
-
-    // ══════════════════════════════════════════════════════════
-    // CH 5 — USE CASES
-    // ══════════════════════════════════════════════════════════
-    {
-        component: <ChapterSlide
-            number="5"
-            chapter="Use Cases — Every Department"
-            title="AI in Action."
-            subtitle="These are not hypothetical pilot projects. These are things your teams can start doing this week."
-        />, isDark: true
-    },
-
-    { component: <SlideAIMatrix />, isDark: false },
-    { component: <SlideUseCaseMarketing />, isDark: false },
-    { component: <SlideUseCaseHR />, isDark: false },
-    { component: <SlideAgenticCommerce />, isDark: false },
-    { component: <SlideUseCaseSales />, isDark: false },
-    { component: <SlideUseCaseIT />, isDark: false },
-    { component: <SlideUseCaseCS />, isDark: false },
-    { component: <SlideBankingROI />, isDark: false },
-
-    {
-        component: <StatSlide
-            stat="88%"
-            statLabel="of organizations using AI agents report a measurable ROI within the first year of deployment."
-            breakdowns={[
-                { pct: "4.1×", label: "average ROI for agentic AI workflows" },
-                { pct: "74%", label: "report improved employee satisfaction" },
-                { pct: "68%", label: "report faster decision-making across depts." },
-                { pct: "61%", label: "reduced operational cost within 6 months" },
-            ]}
-            source="Source: Google Cloud, The ROI of AI, 2025"
-        />, isDark: true
-    },
-
-    // ══════════════════════════════════════════════════════════
-    // CH 6 — DATA SECURITY & GOVERNANCE
-    // ══════════════════════════════════════════════════════════
-    {
-        component: <ChapterSlide
-            number="6"
-            chapter="Data Security & Governance"
-            title="Speed Needs Strong Guardrails."
-            subtitle="Autonomous systems require formal accountability frameworks. AI governance is not optional — it's the foundation."
-        />, isDark: true
-    },
-
-    {
-        component: <BigStatementSlide
-            eyebrow="Key Finding · Security"
-            statement="70% of security leaders say AI has increased threat detection speed — but 58% feel unprepared for AI-specific breaches."
-            body="The answer is not to slow down AI adoption, but to build governance infrastructure that scales alongside it."
-            source="Source: Google Cloud AI Agent Trends 2026 Report"
-        />, isDark: true
-    },
-
-    {
-        component: <SplitSlide
-            label="Key Risk"
-            title="Prompt Data Leakage."
-            subtitle="The most common — and most dangerous — mistake in enterprise AI adoption."
-            points={[
-                { title: "What employees do (unknowingly)", desc: "Paste internal salary data, client names, or contract details into a public AI tool for 'quick analysis'. The AI vendor may log and learn from it.", icon: Fingerprint },
-                { title: "Indonesia PDP Law Implications", desc: "If personal data of customers is exposed to third-party AI systems without consent, your company may face regulatory consequences under UU PDP.", icon: Lock }
-            ]}
-        />, isDark: false
-    },
-
-    {
-        component: <SplitSlide
-            label="Key Mitigation"
-            title="Enterprise Zero Data Retention."
-            subtitle="The minimum viable security baseline for any corporate AI deployment."
-            points={[
-                { title: "Isolated Enterprise Licensing", desc: "Use enterprise-tier cloud services (MS365 Copilot, Google Workspace) where your documents are contractually NOT used to train AI models.", icon: Key },
-                { title: "Anonymization Policy", desc: "Before any data is passed to an AI agent, strip names, IDs, and identifiers. Build this as a workplace habit — not just a policy document.", icon: EyeOff }
-            ]}
-        />, isDark: false
-    },
-
-    { component: <Slide5Security />, isDark: false },
-
-    {
-        component: <SplitSlide
-            label="Governance"
-            title="Human-in-the-Loop."
-            subtitle="The most critical principle: automation accelerates, but humans authorize."
-            points={[
-                { title: "AI can draft, never decide", desc: "Financial approvals, hiring decisions, and contract signings must always route through a human decision-point — no exceptions.", icon: Scale },
-                { title: "Professional Skepticism Culture", desc: "Employees must treat AI outputs as a first draft, not ground truth. Verify citations. Question confident-sounding but unverified claims.", icon: CheckCircle2 }
-            ]}
-        />, isDark: false
-    },
-
-    // ══════════════════════════════════════════════════════════
-    // CH 7 — LIVE DEMO: NOTEBOOKLM
-    // ══════════════════════════════════════════════════════════
-    {
-        component: <ChapterSlide
-            number="7"
-            chapter="Live Demo"
-            title="NotebookLM in Action."
-            subtitle="Turn a stack of unmanageable company documents into an intelligent, citable Q&A engine — in minutes."
-        />, isDark: true
     },
 
     {

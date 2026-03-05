@@ -78,22 +78,22 @@ export const SlideLLMComparison = () => {
     return (
         <div className="w-full h-full flex items-center justify-center">
             <div className="w-full max-w-6xl mx-auto px-8">
-                <p className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-2">Understanding the Models</p>
-                <h2 className="text-4xl font-bold tracking-tighter text-gray-900 mb-6">Which LLM for what?</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <p className="text-sm font-bold tracking-[0.2em] text-gray-400 uppercase mb-3">Understanding the Models</p>
+                <h2 className="text-5xl font-bold tracking-tighter text-gray-900 mb-8">Which LLM for what?</h2>
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
                     {models.map((m, i) => (
-                        <div key={i} className={`rounded-3xl border p-5 ${m.color} flex flex-col gap-2.5`}>
+                        <div key={i} className={`rounded-3xl border p-6 ${m.color} flex flex-col gap-3`}>
                             {m.badge && (
-                                <span className="text-[9px] font-black tracking-wider bg-white/70 border border-white rounded-full px-2.5 py-1 w-max text-gray-600">{m.badge}</span>
+                                <span className="text-[10px] font-black tracking-wider bg-white/70 border border-white rounded-full px-3 py-1.5 w-max text-gray-600 shadow-sm">{m.badge}</span>
                             )}
-                            <div className="flex items-center gap-3">
-                                <ToolLogo name={m.name} logo={m.logo} color={m.lf.split(' ')[0]} textColor={m.lf.split(' ')[1]} />
+                            <div className="flex items-center gap-4">
+                                <ToolLogo name={m.name} logo={m.logo} color={m.lf.split(' ')[0]} textColor={m.lf.split(' ')[1]} size="lg" />
                                 <div>
-                                    <h3 className="text-sm font-black text-gray-900 tracking-tight leading-tight">{m.name}</h3>
-                                    <span className="text-[9px] font-bold tracking-widest text-gray-400 uppercase">{m.maker}</span>
+                                    <h3 className="text-base font-black text-gray-900 tracking-tight leading-tight">{m.name}</h3>
+                                    <span className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">{m.maker}</span>
                                 </div>
                             </div>
-                            <p className="text-gray-600 text-xs leading-relaxed">{m.best}</p>
+                            <p className="text-gray-600 text-sm leading-relaxed">{m.best}</p>
                         </div>
                     ))}
                 </div>
@@ -119,28 +119,28 @@ export const SlideLLMLandscape = () => {
 
     const TableRow = ({ m, shade }) => (
         <tr className={shade ? "bg-gray-50/60" : "bg-white"}>
-            <td className="py-3 pl-4 pr-3 w-9">
-                <ToolLogo name={m.name} logo={m.logo} color={m.lf.split(' ')[0]} textColor={m.lf.split(' ')[1]} size="sm" />
+            <td className="py-4 pl-4 pr-3 w-12">
+                <ToolLogo name={m.name} logo={m.logo} color={m.lf.split(' ')[0]} textColor={m.lf.split(' ')[1]} size="md" />
             </td>
-            <td className="py-3 pr-4 w-40">
-                <p className="font-bold text-sm text-gray-900 leading-tight">{m.name}</p>
-                <p className="text-[9px] text-gray-400 font-semibold uppercase tracking-wider mt-0.5">{m.maker}</p>
+            <td className="py-4 pr-4 w-48">
+                <p className="font-bold text-base text-gray-900 leading-tight">{m.name}</p>
+                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mt-0.5">{m.maker}</p>
             </td>
-            <td className="py-3 pr-4 w-44">
-                <span className={`text-[9px] font-black tracking-wider uppercase px-2.5 py-1 rounded-full ${m.lf}`}>{m.strength}</span>
+            <td className="py-4 pr-4 w-52">
+                <span className={`text-[10px] font-black tracking-wider uppercase px-3 py-1.5 rounded-full shadow-sm ${m.lf}`}>{m.strength}</span>
             </td>
-            <td className="py-3 pr-4 text-gray-500 text-xs leading-relaxed">{m.desc}</td>
+            <td className="py-4 pr-4 text-gray-500 text-sm leading-relaxed">{m.desc}</td>
         </tr>
     );
 
     const SectionDivider = ({ label, sublabel, isOpen }) => (
         <tr>
-            <td colSpan={4} className="pt-5 pb-2 pl-4">
-                <div className="flex items-center gap-2.5">
-                    <div className={`w-2 h-2 rounded-full ${isOpen ? "bg-indigo-500" : "bg-gray-800"}`} />
-                    <span className="text-xs font-black text-gray-900">{label}</span>
-                    <span className="text-[9px] text-gray-400 uppercase tracking-widest font-semibold">{sublabel}</span>
-                    <div className="h-px flex-1 bg-gray-100" />
+            <td colSpan={4} className="pt-6 pb-2 pl-4">
+                <div className="flex items-center gap-3">
+                    <div className={`w-2.5 h-2.5 rounded-full ${isOpen ? "bg-indigo-500" : "bg-gray-800"}`} />
+                    <span className="text-sm font-black text-gray-900 tracking-wide">{label}</span>
+                    <span className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold ml-1">{sublabel}</span>
+                    <div className="h-px flex-1 bg-gray-100 ml-4" />
                 </div>
             </td>
         </tr>
@@ -148,19 +148,19 @@ export const SlideLLMLandscape = () => {
 
     return (
         <div className="w-full h-full flex items-center justify-center">
-            <div className="w-full max-w-5xl mx-auto px-8">
-                <p className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-1">AI Models Landscape · 2026</p>
-                <h2 className="text-4xl font-bold tracking-tighter text-gray-900 mb-4">The LLM universe today.</h2>
+            <div className="w-full max-w-6xl mx-auto px-8">
+                <p className="text-sm font-bold tracking-[0.2em] text-gray-400 uppercase mb-2">AI Models Landscape · 2026</p>
+                <h2 className="text-5xl font-bold tracking-tighter text-gray-900 mb-6">The LLM universe today.</h2>
 
-                <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white">
                     {/* Column headers */}
                     <table className="w-full">
                         <thead>
                             <tr className="bg-gray-900 text-gray-400">
-                                <th className="py-2.5 pl-4 pr-3 w-9" />
-                                <th className="py-2.5 pr-4 text-left text-[9px] font-black tracking-widest uppercase w-40">Model</th>
-                                <th className="py-2.5 pr-4 text-left text-[9px] font-black tracking-widest uppercase w-44">Best For</th>
-                                <th className="py-2.5 pr-4 text-left text-[9px] font-black tracking-widest uppercase">Description</th>
+                                <th className="py-3.5 pl-4 pr-3 w-12" />
+                                <th className="py-3.5 pr-4 text-left text-[11px] font-black tracking-widest uppercase w-48">Model</th>
+                                <th className="py-3.5 pr-4 text-left text-[11px] font-black tracking-widest uppercase w-52">Best For</th>
+                                <th className="py-3.5 pr-4 text-left text-[11px] font-black tracking-widest uppercase">Description</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">

@@ -8,7 +8,7 @@ export const BigStatementSlide = ({ eyebrow, statement, body, source }) => (
         <div className="absolute -top-1/4 -right-1/4 w-[70vh] h-[70vh] rounded-full bg-gradient-to-br from-pink-500/20 via-purple-500/10 to-transparent blur-3xl pointer-events-none" />
         <div className="w-full max-w-4xl mx-auto px-8 z-10">
             {eyebrow && (
-                <p className="text-xs font-bold tracking-[0.3em] text-zinc-500 uppercase mb-8">{eyebrow}</p>
+                <p className="text-sm md:text-base font-bold tracking-[0.3em] text-zinc-500 uppercase mb-8">{eyebrow}</p>
             )}
             <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.1] tracking-tight text-white mb-8">
                 {statement}
@@ -19,7 +19,7 @@ export const BigStatementSlide = ({ eyebrow, statement, body, source }) => (
                 </p>
             )}
             {source && (
-                <p className="mt-10 text-xs text-zinc-600 font-medium tracking-wide">{source}</p>
+                <p className="mt-10 text-sm text-zinc-600 font-medium tracking-wide">{source}</p>
             )}
         </div>
     </div>
@@ -41,7 +41,7 @@ export const StatSlide = ({ stat, statLabel, breakdowns, source }) => (
             </div>
             {/* Right: Breakdown list */}
             <div className="flex-1 w-full">
-                <p className="text-sm font-bold tracking-[0.2em] text-zinc-500 uppercase mb-6">Of those:</p>
+                <p className="text-base font-bold tracking-[0.2em] text-zinc-500 uppercase mb-6">Of those:</p>
                 <div className="flex flex-col gap-5">
                     {breakdowns.map((item, i) => (
                         <div key={i} className="flex items-center gap-5">
@@ -54,7 +54,7 @@ export const StatSlide = ({ stat, statLabel, breakdowns, source }) => (
                         </div>
                     ))}
                 </div>
-                {source && <p className="mt-10 text-xs text-zinc-600 font-medium tracking-wide">{source}</p>}
+                {source && <p className="mt-10 text-sm text-zinc-600 font-medium tracking-wide">{source}</p>}
             </div>
         </div>
     </div>
@@ -64,8 +64,8 @@ export const SimpleSlide = ({ label, title, subtitle, icon: Icon }) => (
     <div className="w-full h-full flex items-center justify-center relative">
         <div className="w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center px-4">
             {label && (
-                <div className="inline-flex items-center gap-2 border border-gray-200 bg-white px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] text-gray-500 uppercase mb-8 shadow-sm">
-                    {Icon && <Icon className="w-4 h-4 text-gray-400" />} {label}
+                <div className="inline-flex items-center gap-2 border border-gray-200 bg-white px-5 py-2 rounded-full text-xs md:text-sm font-bold tracking-[0.2em] text-gray-500 uppercase mb-8 shadow-sm">
+                    {Icon && <Icon className="w-5 h-5 text-gray-400" />} {label}
                 </div>
             )}
             <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-bold tracking-tighter leading-[1.05] text-gray-900 mb-8 max-w-4xl">
@@ -85,8 +85,8 @@ export const SplitSlide = ({ label, title, subtitle, points }) => (
         <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-12 lg:gap-20 items-center justify-between px-8">
             <div className="w-full md:w-[45%] flex flex-col justify-center">
                 {label && (
-                    <div className="inline-flex max-w-max items-center justify-center gap-2 border border-gray-200 bg-gray-50 px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-[0.2em] text-gray-500 mb-6 shadow-sm">
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span> {label}
+                    <div className="inline-flex max-w-max items-center justify-center gap-2 border border-gray-200 bg-gray-50 px-4 py-1.5 rounded-full text-xs uppercase font-bold tracking-[0.2em] text-gray-500 mb-6 shadow-sm">
+                        <span className="w-2 h-2 rounded-full bg-gray-400"></span> {label}
                     </div>
                 )}
                 <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold mb-6 tracking-tighter leading-[1.05] text-gray-900">
@@ -105,8 +105,8 @@ export const SplitSlide = ({ label, title, subtitle, points }) => (
                             {pt.icon ? <pt.icon className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2 tracking-tight">{pt.title}</h3>
-                            <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-md">{pt.desc}</p>
+                            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 tracking-tight">{pt.title}</h3>
+                            <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-md">{pt.desc}</p>
                         </div>
                     </div>
                 ))}
