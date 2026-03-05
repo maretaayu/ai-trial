@@ -26,6 +26,7 @@ import SlideBankingAIMatrix from '../components/slides/SlideBankingAIMatrix';
 import SlideAgenticBanking from '../components/slides/SlideAgenticBanking';
 import SlideBankingROI from '../components/slides/SlideBankingROI';
 import SlideAIIntro from '../components/slides/SlideAIIntro';
+import SlideReferences from '../components/slides/SlideReferences';
 
 /* ───────────────────────────────────────────────
    SPECIAL SLIDE COMPONENTS (inline, one-off)
@@ -412,4 +413,6 @@ export const slidesData = [
             source="Source: Google Cloud AI Agent Trends 2026 Report"
         />, isDark: true
     },
+
+    { component: <SlideReferences />, isDark: false },
 ];
