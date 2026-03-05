@@ -66,10 +66,10 @@ export default function SlideBankingOpportunity() {
                 {/* Header */}
                 <div className="mb-6">
                     <div className="inline-flex items-center gap-2 border border-blue-100 bg-blue-50 px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.2em] text-blue-600 uppercase mb-3">
-                        Banking Sector · AI Opportunity
+                        Sektor Perbankan · Peluang AI
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-gray-900">
-                        Financial Services: A Leading <span className="text-blue-600">AI Adopter.</span>
+                        Layanan Keuangan: Pengadopsi AI <span className="text-blue-600">Terdepan.</span>
                     </h2>
                 </div>
 
@@ -78,7 +78,7 @@ export default function SlideBankingOpportunity() {
                     {/* LEFT: Pie Chart */}
                     <div>
                         <p className="text-[10px] font-bold tracking-[0.15em] text-gray-400 uppercase mb-3">
-                            Industries with the Biggest AI Adoption
+                            Industri dengan Adopsi AI Terbesar
                         </p>
                         <div className="flex items-center gap-6">
                             <PieChart />
@@ -94,19 +94,19 @@ export default function SlideBankingOpportunity() {
                                 ))}
                             </div>
                         </div>
-                        <p className="text-[10px] text-gray-400 mt-3">Source: Fortune Business Insights, 2023</p>
+                        <p className="text-[10px] text-gray-400 mt-3">Sumber: Fortune Business Insights, 2023</p>
                     </div>
 
                     {/* RIGHT: Insight Text */}
                     <div className="flex flex-col justify-center gap-5">
                         <p className="text-base text-gray-500 leading-relaxed">
-                            The data reveals that the banking industry has become one of the fastest adopters of AI technology in the era of digital transformation.
+                            Data menunjukkan bahwa industri perbankan telah menjadi salah satu pengadopsi teknologi AI tercepat di era transformasi digital.
                         </p>
                         <p className="text-base text-gray-500 leading-relaxed">
-                            According to McKinsey (2023), AI has the potential to generate up to <span className="font-semibold text-gray-700">US$385 billion</span> in value for Risk & Legal, <span className="font-semibold text-gray-700">US$321 billion</span> for Corporate Banking, and <span className="font-semibold text-gray-700">US$306 billion</span> for Retail Banking.
+                            Menurut McKinsey (2023), AI berpotensi menghasilkan nilai hingga <span className="font-semibold text-gray-700">US$385 miliar</span> untuk Risk & Legal, <span className="font-semibold text-gray-700">US$321 miliar</span> untuk Corporate Banking, dan <span className="font-semibold text-gray-700">US$306 miliar</span> untuk Retail Banking.
                         </p>
                         <p className="text-xs text-gray-400">
-                            Source: Fortune Business Insights (2023), McKinsey (2023)
+                            Sumber: Fortune Business Insights (2023), McKinsey (2023)
                         </p>
                     </div>
                 </div>

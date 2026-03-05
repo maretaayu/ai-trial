@@ -66,13 +66,13 @@ const SlideThenVsNow = () => (
     <div className="w-full h-full flex items-center justify-center">
         <div className="w-full max-w-6xl mx-auto px-8">
             <div className="text-center mb-12">
-                <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900">Then vs. Now.</h2>
-                <p className="text-xl text-gray-500 mt-4 font-medium">AI is no longer a curiosity — it is competitive infrastructure.</p>
+                <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900">Dulu vs. Sekarang.</h2>
+                <p className="text-xl text-gray-500 mt-4 font-medium">AI bukan lagi sekadar eksperimen — melainkan infrastruktur kompetitif.</p>
             </div>
             <div className="grid grid-cols-2 gap-6">
                 <div className="bg-gray-50 border border-gray-100 rounded-3xl p-8">
-                    <span className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-6 block">2022 — Then</span>
-                    {["One person, one task at a time.", "AI demos were fun experiments.", "Data was siloed across departments.", "Reports took days to compile manually.", "Employees were measured by hours logged."].map((t, i) => (
+                    <span className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-6 block">2022 — Dulu</span>
+                    {["Satu orang mengerjakan satu tugas pada satu waktu.", "Demo AI sekadar eksperimen yang menyenangkan.", "Data tersekat-sekat antar departemen.", "Pembuatan laporan memakan waktu berhari-hari secara manual.", "Karyawan dinilai berdasarkan jumlah jam kerja."].map((t, i) => (
                         <div key={i} className="flex items-center gap-3 mb-4 text-gray-500">
                             <div className="w-1.5 h-1.5 rounded-full bg-gray-300 flex-shrink-0"></div>
                             <span className="text-base font-medium">{t}</span>
@@ -80,8 +80,8 @@ const SlideThenVsNow = () => (
                     ))}
                 </div>
                 <div className="bg-gray-900 rounded-3xl p-8">
-                    <span className="text-xs font-bold tracking-[0.2em] text-blue-400 uppercase mb-6 block">2026 — Now</span>
-                    {["One person orchestrates a team of AI agents.", "Agents run workflows continuously, 24/7.", "Knowledge is shared in real-time across systems.", "Reports are auto-generated in seconds.", "Employees are measured by outcomes they direct."].map((t, i) => (
+                    <span className="text-xs font-bold tracking-[0.2em] text-blue-400 uppercase mb-6 block">2026 — Sekarang</span>
+                    {["Satu orang mengorkestrasi sebuah tim agen AI (AI Agents).", "Agen AI menjalankan workflow secara terus-menerus, 24/7.", "Pengetahuan dibagikan secara real-time lintas sistem.", "Laporan di-generate otomatis dalam hitungan detik.", "Karyawan dinilai berdasarkan hasil kerja (outcomes) yang dicapai."].map((t, i) => (
                         <div key={i} className="flex items-center gap-3 mb-4 text-white">
                             <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" />
                             <span className="text-base font-medium">{t}</span>
@@ -205,7 +205,7 @@ export const slidesData = [
 
     {
         component: <QuoteLayout
-            quote="AI agents are the leap from being an 'add-on' approach to being an 'AI-first' process. It's a fundamental change in workflow."
+            quote="Agen AI adalah lompatan besar dari sekadar pendekatan 'add-on' menjadi proses 'AI-first'. Ini adalah perubahan fundamental dalam workflow."
             author="Oliver Parker"
             role="VP, Global GTM for Generative AI — Google Cloud"
             image="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&h=200&q=80"
@@ -231,14 +231,14 @@ export const slidesData = [
     {
         component: <StatSlide
             stat="88%"
-            statLabel="of organizations using AI agents report a measurable ROI within the first year of deployment."
+            statLabel="dari organisasi yang menggunakan agen AI melaporkan ROI yang terukur dalam tahun pertama implementasi."
             breakdowns={[
-                { pct: "4.1×", label: "average ROI for agentic AI workflows" },
-                { pct: "74%", label: "report improved employee satisfaction" },
-                { pct: "68%", label: "report faster decision-making across depts." },
-                { pct: "61%", label: "reduced operational cost within 6 months" },
+                { pct: "4.1×", label: "rata-rata ROI untuk workflow AI Agentic" },
+                { pct: "74%", label: "melaporkan peningkatan kepuasan karyawan" },
+                { pct: "68%", label: "melaporkan pengambilan keputusan yang lebih cepat antardepartemen" },
+                { pct: "61%", label: "penurunan biaya operasional dalam waktu 6 bulan" },
             ]}
-            source="Source: Google Cloud, The ROI of AI, 2025"
+            source="Sumber: Google Cloud, The ROI of AI, 2025"
         />, isDark: true
     },
 
@@ -260,14 +260,14 @@ export const slidesData = [
     {
         component: <StatSlide
             stat="52%"
-            statLabel="of executives in gen AI-using organizations already have AI agents in production."
+            statLabel="dari para eksekutif di organisasi pengguna Gen AI telah menempatkan agen AI di tahap produksi."
             breakdowns={[
-                { pct: "49%", label: "use agents for customer service" },
-                { pct: "46%", label: "use agents for marketing or security operations" },
-                { pct: "45%", label: "use agents for tech support" },
-                { pct: "43%", label: "use agents for product innovation or research" },
+                { pct: "49%", label: "menggunakan agen AI untuk Customer Service" },
+                { pct: "46%", label: "menggunakan agen AI untuk operasional Marketing atau Security" },
+                { pct: "45%", label: "menggunakan agen AI untuk Tech Support" },
+                { pct: "43%", label: "menggunakan agen AI untuk riset atau inovasi produk" },
             ]}
-            source="Source: Google Cloud, The ROI of AI, 2025 (Total global: n=3466)"
+            source="Sumber: Google Cloud, The ROI of AI, 2025 (Total global: n=3466)"
         />, isDark: true
     },
 
