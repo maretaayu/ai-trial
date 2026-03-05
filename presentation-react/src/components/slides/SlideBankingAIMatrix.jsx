@@ -6,11 +6,11 @@ const rows = [
         color: "bg-slate-700",
         textColor: "text-white",
         tagColor: "bg-slate-600 text-slate-100",
-        desc: "Forecasts outcomes using historical patterns",
+        desc: "Memprediksi hasil menggunakan pola data masa lalu",
         examples: [
-            { fn: "Marketing & Sales", items: ["Customer retention", "Cross-selling", "Pricing optimization"] },
-            { fn: "Operations", items: ["Intelligent payment routing", "Smart payment repairs", "Branch network optimization"] },
-            { fn: "Risk & Compliance", items: ["Early warning credit risk", "Collateral risk assessment", "Automated credit decisions"] },
+            { fn: "Pemasaran & Penjualan", items: ["Retensi Nasabah", "Penjualan Silang", "Optimasi Harga"] },
+            { fn: "Operasional", items: ["Routing Pembayaran Cerdas", "Perbaikan Pembayaran Otomatis", "Optimasi Jaringan Cabang"] },
+            { fn: "Risiko & Kepatuhan", items: ["Peringatan Dini Risiko Kredit", "Penilaian Risiko Agunan", "Keputusan Kredit Otomatis"] },
         ],
     },
     {
@@ -18,11 +18,11 @@ const rows = [
         color: "bg-blue-600",
         textColor: "text-white",
         tagColor: "bg-blue-500 text-white",
-        desc: "Creates content, synthesizes data, automates document work",
+        desc: "Membuat konten, sintesa data, & otomatisasi dokumen",
         examples: [
-            { fn: "Prospecting & Onboarding", items: ["Streamlined KYC", "Intelligent doc processing", "Initial fact finding"] },
-            { fn: "Financial Advice", items: ["Investment research synthesis", "Tailored reports per client", "Support & needs identification"] },
-            { fn: "Customer Support", items: ["Policy/contract monitoring", "Automated classification", "Customer service chatbots"] },
+            { fn: "Prospek & Onboarding", items: ["KYC yang Efisien", "Proses Dokumen Cerdas", "Pengumpulan Fakta Awal"] },
+            { fn: "Saran Keuangan", items: ["Sintesa Riset Investasi", "Laporan Khusus Nasabah", "Identifikasi Kebutuhan"] },
+            { fn: "Layanan Pelanggan", items: ["Monitoring Kontrak", "Klasifikasi Otomatis", "Chatbot Layanan"] },
         ],
     },
     {
@@ -30,11 +30,11 @@ const rows = [
         color: "bg-gray-900",
         textColor: "text-white",
         tagColor: "bg-gray-700 text-gray-100",
-        desc: "Autonomous agents that act across systems with minimal human input",
+        desc: "Agen otonom yang bekerja lintas sistem & proses",
         examples: [
-            { fn: "Customer Interaction", items: ["Client engagement automation", "Relationship management", "Personal financial advisory"] },
-            { fn: "Market Intelligence", items: ["Competitive market analysis", "Market trend surveillance", "Strategic insights generation"] },
-            { fn: "Compliance & Fraud", items: ["AML transaction monitoring", "Financial risk surveillance", "Process automation & quality"] },
+            { fn: "Interaksi Nasabah", items: ["Otomatisasi Engagement", "Manajemen Hubungan", "Penasihat Keuangan Pribadi"] },
+            { fn: "Intelijen Pasar", items: ["Analisis Pasar Kompetitif", "Pengawasan Tren Pasar", "Generasi Insight Strategis"] },
+            { fn: "Kepatuhan & Fraud", items: ["Monitoring Transaksi AML", "Pengawasan Risiko", "Otomatisasi Proses"] },
         ],
     },
 ];
@@ -42,35 +42,35 @@ const rows = [
 export default function SlideBankingAIMatrix() {
     return (
         <div className="w-full h-full flex items-center justify-center bg-white">
-            <div className="w-full max-w-6xl mx-auto px-8">
+            <div className="w-full max-w-7xl mx-auto px-8 py-10">
 
-                <div className="mb-5">
-                    <div className="inline-flex items-center gap-2 border border-blue-100 bg-blue-50 px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.2em] text-blue-600 uppercase mb-3">
-                        Banking Sector · AI Implementation
+                <div className="mb-8">
+                    <div className="inline-flex items-center gap-2 border border-blue-100 bg-blue-50 px-4 py-1.5 rounded-full text-xs font-bold tracking-[0.2em] text-blue-600 uppercase mb-4">
+                        Sektor Perbankan · Implementasi AI
                     </div>
-                    <h2 className="text-4xl font-bold tracking-tighter text-gray-900">
-                        Three Levels of AI in <span className="text-blue-600">Banking Functions.</span>
+                    <h2 className="text-5xl font-bold tracking-tighter text-gray-900 leading-[1.1]">
+                        Tiga Level AI dalam <span className="text-blue-600">Fungsi Perbankan.</span>
                     </h2>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-4">
                     {rows.map((row, i) => (
-                        <div key={i} className="grid grid-cols-[180px_1fr] rounded-2xl overflow-hidden border border-gray-100">
+                        <div key={i} className="grid grid-cols-[220px_1fr] rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
                             {/* Label */}
-                            <div className={`${row.color} ${row.textColor} px-5 py-4 flex flex-col justify-center`}>
-                                <div className="text-sm font-black tracking-tight leading-tight">{row.type}</div>
-                                <div className="text-[10px] opacity-70 mt-1 leading-snug">{row.desc}</div>
+                            <div className={`${row.color} ${row.textColor} px-8 py-6 flex flex-col justify-center`}>
+                                <div className="text-xl font-black tracking-tight leading-tight mb-2">{row.type}</div>
+                                <div className="text-xs opacity-80 leading-relaxed font-medium">{row.desc}</div>
                             </div>
                             {/* Examples */}
-                            <div className="grid grid-cols-3 divide-x divide-gray-100 bg-gray-50">
+                            <div className="grid grid-cols-3 divide-x divide-gray-100 bg-gray-50/50">
                                 {row.examples.map((ex, j) => (
-                                    <div key={j} className="px-4 py-3">
-                                        <div className="text-[10px] font-bold tracking-[0.1em] text-gray-400 uppercase mb-2">{ex.fn}</div>
-                                        <div className="flex flex-col gap-1">
+                                    <div key={j} className="px-6 py-5">
+                                        <div className="text-xs font-bold tracking-[0.1em] text-gray-400 uppercase mb-4">{ex.fn}</div>
+                                        <div className="flex flex-col gap-2.5">
                                             {ex.items.map((item, k) => (
-                                                <div key={k} className="flex items-start gap-1.5">
-                                                    <span className="w-1 h-1 rounded-full bg-gray-300 flex-shrink-0 mt-1.5" />
-                                                    <span className="text-[11px] text-gray-600 leading-snug">{item}</span>
+                                                <div key={k} className="flex items-start gap-2">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400/40 flex-shrink-0 mt-1.5" />
+                                                    <span className="text-sm text-gray-700 leading-snug font-medium opacity-90">{item}</span>
                                                 </div>
                                             ))}
                                         </div>
@@ -81,7 +81,9 @@ export default function SlideBankingAIMatrix() {
                     ))}
                 </div>
 
-                <p className="text-[10px] text-gray-400 mt-3">Source: BCG (2023), World Economic Forum (2024)</p>
+                <div className="flex justify-between items-center mt-6">
+                    <p className="text-[11px] text-gray-400 font-medium">Source: BCG (2023), World Economic Forum (2024)</p>
+                </div>
             </div>
         </div>
     );
