@@ -101,7 +101,9 @@ async function toggleCall() {
 }
 
 async function startCall() {
-  if (!state.apiKey) {
+  // If local, we can require key, but on Netlify we try proxy first
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  if (isLocal && !state.apiKey) {
     showToast('Harap masukkan API Key Gemini dulu di atas!', 'error');
     UI.apiKeyInput.focus();
     return;
@@ -163,7 +165,16 @@ const PHONE_SVG = `<svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0
 const STOP_SVG  = `<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>`;
 
 async function openGeminiLiveWS() {
-  const url = `${GEMINI_LIVE_URL}?key=${state.apiKey}`;
+  // Use proxy on Netlify, or local key if provided
+  let url;
+  if (!state.apiKey) {
+    // Attempt use proxy
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    url = `${protocol}//${window.location.host}/api/live`;
+  } else {
+    url = `${GEMINI_LIVE_URL}?key=${state.apiKey}`;
+  }
+
   state.ws = new WebSocket(url);
   state.ws.binaryType = 'arraybuffer';
 
@@ -534,20 +545,34 @@ Berikan evaluasi dalam format JSON:
 }`;
 
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${state.apiKey}`,
-      {
+    let res;
+    if (!state.apiKey) {
+      // Use Proxy
+      res = await fetch('/.netlify/functions/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.6, responseMimeType: 'application/json' }
-        })
-      }
-    );
+        body: JSON.stringify({ prompt })
+      });
+    } else {
+      // Direct
+      res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${state.apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.6, responseMimeType: 'application/json' }
+          })
+        }
+      );
+    }
     const data = await res.json();
+    if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+    
+    // For proxy, it returns the whole gemini data structure
     const raw = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!raw) throw new Error('No response');
+    if (!raw) throw new Error('No response from AI');
     const result = JSON.parse(raw);
     renderFeedback(result);
   } catch (e) {
