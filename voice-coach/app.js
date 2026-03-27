@@ -11,7 +11,7 @@
 // STATE
 // ──────────────────────────────────────────
 const state = {
-  apiKey: 'AIzaSyDpIQko3NVNKEjmnPtRhkLWyr0J02RuP7Y',
+  apiKey: localStorage.getItem('GEMINI_API_KEY') || '',
   ws: null,
   audioCtx: null,
   micStream: null,
@@ -41,6 +41,7 @@ const $ = id => document.getElementById(id);
 const UI = {
   callUI:          $('callUI'),
   tipsEl:          $('tipsEl'),
+  apiKeyInput:     $('apiKeyInput'),
   contextInput:    $('contextInput'),
   voiceSelect:     $('voiceSelect'),
   aiAvatar:        $('aiAvatar'),
@@ -72,6 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
   UI.newCallBtn.addEventListener('click', resetForNewCall);
   UI.voiceSelect.addEventListener('change', () => { state.voiceToUse = UI.voiceSelect.value; });
   
+  // Load saved API Key
+  if (state.apiKey) UI.apiKeyInput.value = state.apiKey;
+  UI.apiKeyInput.addEventListener('input', () => {
+    state.apiKey = UI.apiKeyInput.value.trim();
+    localStorage.setItem('GEMINI_API_KEY', state.apiKey);
+  });
+  
   // Auto-show call UI instead of waiting for setup
   showCallUI();
 });
@@ -93,6 +101,11 @@ async function toggleCall() {
 }
 
 async function startCall() {
+  if (!state.apiKey) {
+    showToast('Harap masukkan API Key Gemini dulu di atas!', 'error');
+    UI.apiKeyInput.focus();
+    return;
+  }
   setStatus('connecting', 'Menghubungkan...');
   try {
     await openGeminiLiveWS();
