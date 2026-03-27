@@ -11,6 +11,7 @@
 // STATE
 // ──────────────────────────────────────────
 const state = {
+  apiKey: null,
   ws: null,
   audioCtx: null,
   micStream: null,
@@ -103,7 +104,7 @@ async function startCall() {
 
 function endCall() {
   closeCall();
-  setStatus('ended', 'Call selesai');
+  setStatus('ended', 'Sesi Berakhir');
   if (state.conversationLog.length > 0) {
     requestPostCallFeedback();
   }
@@ -113,6 +114,10 @@ function closeCall(silent = false) {
   state.isCallActive = false;
   state.isAISpeaking = false;
   state.isUserSpeaking = false;
+  
+  // Clear UI
+  if (UI.callStatusText) UI.callStatusText.style.display = 'none';
+  if (UI.callTimer) UI.callTimer.style.display = 'none';
 
   // Stop mic
   if (state.scriptProcessor) { state.scriptProcessor.disconnect(); state.scriptProcessor = null; }
@@ -137,7 +142,7 @@ function closeCall(silent = false) {
   UI.muteBtn.style.display = 'none';
   setWaveActive('user', false);
   setWaveActive('ai', false);
-  UI.aiAvatar.classList.remove('ai-speaking', 'user-speaking');
+  UI.aiAvatar.classList.remove('active', 'ai-speaking', 'user-speaking');
 }
 
 // ──────────────────────────────────────────
@@ -149,9 +154,21 @@ const PHONE_SVG = `<svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0
 const STOP_SVG  = `<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>`;
 
 async function openGeminiLiveWS() {
-  // Always use secure proxy
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const url = `${protocol}//${window.location.host}/api/live`;
+  // 1. Fetch Key from Netlify (if not set in state)
+  if (!state.apiKey) {
+    try {
+      const res = await fetch('/.netlify/functions/get-config');
+      const data = await res.json();
+      state.apiKey = data.apiKey;
+    } catch (e) {
+      console.error("Gagal ambil API key dari server", e);
+    }
+  }
+
+  if (!state.apiKey) throw new Error("API Key tidak tersedia (cek Netlify Env Vars)");
+
+  // 2. Direct secure connection
+  const url = `${GEMINI_LIVE_URL}?key=${state.apiKey}`;
 
   state.ws = new WebSocket(url);
   state.ws.binaryType = 'arraybuffer';
@@ -262,6 +279,7 @@ PENTING: Ini adalah percakapan voice, jadi respons harus natural diucapkan, tanp
 // ──────────────────────────────────────────
 function onCallStarted() {
   UI.callBtn.classList.add('active');
+  UI.aiAvatar.classList.add('active');
   UI.callBtnIcon.innerHTML = STOP_SVG;
   const lbl = $('callBtnText');
   if (lbl) lbl.textContent = 'Akhiri Call';
@@ -273,10 +291,7 @@ function onCallStarted() {
   state.conversationLog = [];
   appendMsg('system', 'Call dimulai — bicara dengan AI Coach!');
 
-  // Timer
-  state.timerSecs = 0;
-  updateTimer();
-  state.timerInterval = setInterval(() => { state.timerSecs++; updateTimer(); }, 1000);
+  startTimer();
 }
 
 // ──────────────────────────────────────────
@@ -593,9 +608,27 @@ function renderFeedback(result) {
 // ──────────────────────────────────────────
 // UI HELPERS
 // ──────────────────────────────────────────
-function setStatus(type, text) {
-  UI.statusDot.className = `status-dot ${type}`;
-  UI.callStatusText.textContent = text;
+function setStatus(type, msg) {
+  if (UI.callStatusText) {
+    UI.callStatusText.textContent = msg || type;
+  }
+}
+
+// TIMER LOGIC
+function startTimer() {
+  state.timerSecs = 0;
+  UI.callTimer.style.display = 'block';
+  UI.callTimer.style.fontWeight = '600';
+  UI.callTimer.style.color = '#2563eb';
+  UI.callTimer.style.marginTop = '8px';
+  UI.callTimer.textContent = '00:00';
+  clearInterval(state.timerInterval);
+  state.timerInterval = setInterval(() => {
+    state.timerSecs++;
+    const m = Math.floor(state.timerSecs / 60).toString().padStart(2, '0');
+    const s = (state.timerSecs % 60).toString().padStart(2, '0');
+    UI.callTimer.textContent = `${m}:${s}`;
+  }, 1000);
 }
 
 function setAISpeaking(active) {
