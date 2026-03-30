@@ -32,6 +32,23 @@ const state = {
   // Conversation full text for post-call analysis
   conversationLog: [],
   voiceToUse: 'Aoede',
+  // Firebase State
+  user: null,
+  db: null,
+  auth: null,
+  currentSessionId: null
+};
+
+// ──────────────────────────────────────────
+// FIREBASE CONFIG (USER: Hubungkan dengan config kamu di sini)
+// ──────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyA4yClWHZCoJbHHr1qro9XtUY3nx-SwZf4",
+  authDomain: "coach-assistant-2c82b.firebaseapp.com",
+  projectId: "coach-assistant-2c82b",
+  storageBucket: "coach-assistant-2c82b.firebasestorage.app",
+  messagingSenderId: "854712331627",
+  appId: "1:854712331627:web:f8a01e488b3cae677df02e"
 };
 
 // ──────────────────────────────────────────
@@ -66,19 +83,59 @@ const UI = {
 // ──────────────────────────────────────────
 // INIT
 // ──────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  UI.callBtn.addEventListener('click', toggleCall);
-  UI.muteBtn.addEventListener('click', toggleMute);
-  UI.newCallBtn.addEventListener('click', resetForNewCall);
-  UI.voiceSelect.addEventListener('change', () => { state.voiceToUse = UI.voiceSelect.value; });
+document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize Firebase modules
+  const { initializeApp, getAuth, getFirestore } = window.firebaseModules;
+  const app = initializeApp(firebaseConfig);
+  state.auth = getAuth(app);
+  state.db = getFirestore(app);
+
+  // Auth Listener
+  state.auth.onAuthStateChanged(user => {
+    state.user = user;
+    if (user) {
+      $('authScreen').style.display = 'none';
+      showCallUI();
+      loadHistory();
+    } else {
+      $('authScreen').style.display = 'flex';
+    }
+  });
+
+  // Auth UI Events
+  $('loginBtn').onclick = handleGoogleLogin;
+  $('logoutBtn').onclick = handleLogout;
+
+  // UI Events
+  UI.callBtn.onclick = toggleCall;
+  UI.muteBtn.onclick = toggleMute;
+  UI.newCallBtn.onclick = resetForNewCall;
+  UI.voiceSelect.onchange = () => { state.voiceToUse = UI.voiceSelect.value; };
   
-  // Auto-show call UI instead of waiting for setup
-  showCallUI();
+  // History UI Events
+  $('historyBtn').onclick = () => { $('historyScreen').style.display = 'flex'; loadHistory(); };
+  $('closeHistoryBtn').onclick = () => { $('historyScreen').style.display = 'none'; };
+  $('closeDetailBtn').onclick = () => { $('sessionDetail').style.display = 'none'; };
+  $('newSessionFromHistoryBtn').onclick = () => {
+    $('historyScreen').style.display = 'none';
+    startNewSession();
+  };
 });
 
 function showCallUI() {
   if (UI.setupCard) UI.setupCard.style.display = 'none';
   UI.callUI.style.display = 'block';
+}
+
+function startNewSession() {
+  resetForNewCall();
+  // Focus context input so user can type their scenario
+  const ctxInput = $('contextInput');
+  if (ctxInput) {
+    ctxInput.value = '';
+    setTimeout(() => ctxInput.focus(), 100);
+  }
+  showToast('Sesi baru siap! Isi skenario lalu mulai call.', '');
 }
 
 // ──────────────────────────────────────────
@@ -102,11 +159,14 @@ async function startCall() {
   }
 }
 
-function endCall() {
+async function endCall() {
   closeCall();
   setStatus('ended', 'Sesi Berakhir');
   if (state.conversationLog.length > 0) {
-    requestPostCallFeedback();
+    const feedback = await requestPostCallFeedback();
+    if (feedback) {
+      await saveSessionToFirestore(feedback);
+    }
   }
 }
 
@@ -154,18 +214,23 @@ const PHONE_SVG = `<svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0
 const STOP_SVG  = `<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>`;
 
 async function openGeminiLiveWS() {
-  // 1. Fetch Key from Netlify (if not set in state)
+  // 1. Set key from user
   if (!state.apiKey) {
+    state.apiKey = "AIzaSyDz9076a8VK8AaQj4k-_RqqCodm_wzYKoI";
+    
+    // Optional fallback to fetch from server if key above isn't set
     try {
-      const res = await fetch('/.netlify/functions/get-config');
-      const data = await res.json();
-      state.apiKey = data.apiKey;
+      if (!state.apiKey) {
+        const res = await fetch('/.netlify/functions/get-config');
+        const data = await res.json();
+        state.apiKey = data.apiKey;
+      }
     } catch (e) {
       console.error("Gagal ambil API key dari server", e);
     }
   }
 
-  if (!state.apiKey) throw new Error("API Key tidak tersedia (cek Netlify Env Vars)");
+  if (!state.apiKey) throw new Error("API Key tidak tersedia.");
 
   // 2. Direct secure connection
   const url = `${GEMINI_LIVE_URL}?key=${state.apiKey}`;
@@ -285,6 +350,10 @@ function onCallStarted() {
   if (lbl) lbl.textContent = 'Akhiri Call';
   UI.muteBtn.style.display = 'flex';
   setStatus('live', '● Live Call');
+
+  // Hide session setup card during active call
+  const setupCard = $('sessionSetupCard');
+  if (setupCard) setupCard.style.display = 'none';
 
   // Clear transcript
   UI.transcriptArea.innerHTML = '';
@@ -511,53 +580,72 @@ function clearAudioQueue() {
 // POST-CALL ANALYSIS with regular Gemini
 // ──────────────────────────────────────────
 async function requestPostCallFeedback() {
-  UI.feedbackCard.style.display = 'block';
-  UI.feedbackCard.innerHTML = `<div style="text-align:center;padding:30px;color:var(--text-secondary)"><div class="loading-spinner"></div><p style="margin-top:16px">Menganalisa sesi call kamu...</p></div>`;
-  UI.feedbackCard.scrollIntoView({ behavior: 'smooth' });
+  UI.feedbackCard.style.display = 'flex';
+  UI.feedbackCard.innerHTML = `
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;color:var(--text-light)">
+      <div class="loading-spinner"></div>
+      <p style="font-size:15px;font-weight:500">Menganalisa sesi call kamu...</p>
+    </div>`;
 
   const transcript = state.conversationLog
     .map(e => `${e.role === 'user' ? 'SALES' : 'AI COACH'}: ${e.text}`)
     .join('\n');
 
-  const prompt = `Kamu adalah sales communication expert. Analisa transkrip percakapan sales berikut dan berikan feedback konstruktif.
+  const prompt = `Kamu adalah sales communication expert. Analisa transkrip percakapan sales berikut dan berikan feedback konstruktif dalam Bahasa Indonesia.
 
 TRANSKRIP:
 ${transcript}
 
-Berikan evaluasi dalam format JSON:
+Berikan evaluasi dalam format JSON (pastikan valid JSON, tanpa markdown code block):
 {
-  "overallScore": <0-100>,
+  "overallScore": <angka 0-100>,
   "scores": {
-    "clarity": <0-100>,
-    "confidence": <0-100>,
-    "energy": <0-100>,
-    "empathy": <0-100>,
-    "structure": <0-100>
+    "clarity": <angka 0-100>,
+    "confidence": <angka 0-100>,
+    "energy": <angka 0-100>,
+    "empathy": <angka 0-100>,
+    "structure": <angka 0-100>
   },
-  "feedback": "<3-4 paragraf feedback detail dalam Bahasa Indonesia. Berikan pujian untuk kelebihan dan saran spesifik untuk perbaikan>"
+  "summary": "<1 kalimat ringkasan performa sales>",
+  "strengths": ["<kelebihan 1>", "<kelebihan 2>"],
+  "improvements": ["<saran perbaikan 1>", "<saran perbaikan 2>"],
+  "feedback": "<2-3 paragraf feedback detail. Mulai dengan pujian, lalu berikan saran spesifik dan actionable>"
 }`;
 
   try {
-    const res = await fetch('/.netlify/functions/feedback', {
+    // Call Gemini REST API directly using the same key used for the live call
+    const key = state.apiKey;
+    if (!key) throw new Error('API key tidak tersedia');
+
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`;
+    const res = await fetch(geminiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.6, responseMimeType: 'application/json' }
+      })
     });
+
     const data = await res.json();
     if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
-    
-    // For proxy, it returns the whole gemini data structure
-    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!raw) throw new Error('No response from AI');
+
+    let raw = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!raw) throw new Error('Tidak ada respons dari AI');
+    raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+
     const result = JSON.parse(raw);
     renderFeedback(result);
+    return result;
   } catch (e) {
+    console.error("Feedback error:", e);
     UI.feedbackCard.innerHTML = `
-      <h2>Sesi Selesai</h2>
-      <p style="color:var(--text-secondary);margin-top:12px">Tidak bisa mengambil feedback otomatis. Pastikan koneksi internet stabil.</p>
-      <button class="btn-primary" id="newCallBtn2" style="margin-top:20px;width:100%">Mulai Call Baru</button>
+      <div class="feedback-header"><h2>Sesi Selesai</h2></div>
+      <p style="color:var(--text-light);margin-top:12px;font-size:14px">Analisis gagal: ${escapeHtml(e.message)}</p>
+      <button class="auth-btn" id="newCallBtn2" style="margin-top:24px;width:100%">Mulai Call Baru</button>
     `;
     document.getElementById('newCallBtn2')?.addEventListener('click', resetForNewCall);
+    return null;
   }
 }
 
@@ -572,32 +660,52 @@ const SCORE_CONFIGS = [
 function renderFeedback(result) {
   const overall = Math.round(result.overallScore || 0);
   const cls = overall >= 75 ? 'high' : overall >= 50 ? 'mid' : 'low';
+  const overallColor = overall >= 75 ? '#10b981' : overall >= 50 ? '#f59e0b' : '#ef4444';
 
-  // Score chips HTML
   const chips = SCORE_CONFIGS.map(c => {
     const v = Math.round(result.scores?.[c.key] || 0);
     const cl = v >= 75 ? 'high' : v >= 50 ? 'mid' : 'low';
     return `<div class="score-chip ${cl}">
-      <div class="chip-icon">${c.icon}</div>
       <div class="chip-label">${c.label}</div>
       <div class="chip-val">${v}</div>
       <div class="chip-bar"><div class="chip-bar-fill" style="width:0%" data-w="${v}%"></div></div>
     </div>`;
   }).join('');
 
+  const strengthsHtml = (result.strengths || []).map(s =>
+    `<li style="margin-bottom:6px">✓ ${escapeHtml(s)}</li>`
+  ).join('');
+
+  const improvementsHtml = (result.improvements || []).map(s =>
+    `<li style="margin-bottom:6px">→ ${escapeHtml(s)}</li>`
+  ).join('');
+
+  const listsHtml = (strengthsHtml || improvementsHtml) ? `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      ${strengthsHtml ? `<div class="score-chip" style="background:#f0fdf4;border:1px solid #bbf7d0">
+        <div class="chip-label" style="color:#16a34a">Kelebihan</div>
+        <ul style="padding-left:4px;list-style:none;margin-top:8px;font-size:13px;color:#15803d">${strengthsHtml}</ul>
+      </div>` : ''}
+      ${improvementsHtml ? `<div class="score-chip" style="background:#fefce8;border:1px solid #fde68a">
+        <div class="chip-label" style="color:#d97706">Perlu Ditingkatkan</div>
+        <ul style="padding-left:4px;list-style:none;margin-top:8px;font-size:13px;color:#b45309">${improvementsHtml}</ul>
+      </div>` : ''}
+    </div>` : '';
+
   UI.feedbackCard.innerHTML = `
-    <div class="feedback-header">
-      <h2>Hasil Sesi Call</h2>
-      <div class="score-badge ${cls}">${overall}</div>
+    <div style="text-align:center;margin-bottom:24px">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:8px">Skor Keseluruhan</p>
+      <div style="font-size:72px;font-weight:700;color:${overallColor};line-height:1;letter-spacing:-3px">${overall}</div>
+      ${result.summary ? `<p style="margin-top:12px;font-size:14px;color:var(--text-light);font-style:italic">"${escapeHtml(result.summary)}"</p>` : ''}
     </div>
-    <div class="score-row">${chips}</div>
-    <div class="feedback-body">${result.feedback || ''}</div>
-    <button class="btn-primary" id="newCallBtn" style="width:100%;margin-top:20px">Mulai Call Baru</button>
+    <div class="score-row" style="margin-bottom:16px">${chips}</div>
+    ${listsHtml}
+    <div class="feedback-body">${result.feedback ? escapeHtml(result.feedback).replace(/\n/g, '<br>') : ''}</div>
+    <button class="auth-btn" id="newCallBtn" style="margin-top:24px;width:100%">Mulai Latihan Lagi</button>
   `;
 
   document.getElementById('newCallBtn').addEventListener('click', resetForNewCall);
 
-  // Animate bars
   setTimeout(() => {
     UI.feedbackCard.querySelectorAll('.chip-bar-fill').forEach(el => {
       el.style.width = el.dataset.w;
@@ -700,6 +808,11 @@ function resetForNewCall() {
   UI.transcriptArea.innerHTML = '<div class="transcript-placeholder" style="color: #6b7280; font-weight: 500;">"Halo, Aku siap membantu latihan sales kamu. Klik tombol di bawah untuk mulai!"</div>';
   UI.callTimer.textContent = '00:00';
   setStatus('idle', 'Siap memulai call');
+
+  // Show session setup card again
+  const setupCard = $('sessionSetupCard');
+  if (setupCard) setupCard.style.display = 'block';
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -758,3 +871,117 @@ spinnerStyle.textContent = `
 @keyframes _spin { to { transform: rotate(360deg); } }
 `;
 document.head.appendChild(spinnerStyle);
+
+// ──────────────────────────────────────────
+// AUTHENTICATION HANDLERS (Google)
+// ──────────────────────────────────────────
+async function handleGoogleLogin() {
+  try {
+    const { GoogleAuthProvider, signInWithPopup } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js");
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(state.auth, provider);
+    showToast('Berhasil masuk dengan Google!', 'success');
+  } catch (e) {
+    console.error("Login bias:", e);
+    showToast('Gagal masuk: ' + e.message, 'error');
+  }
+}
+
+async function handleLogout() {
+  try {
+    await state.auth.signOut();
+    showToast('Berhasil logout', '');
+    location.reload();
+  } catch (e) {
+    showToast('Gagal logout', 'error');
+  }
+}
+
+// ──────────────────────────────────────────
+// FIRESTORE HANDLERS
+// ──────────────────────────────────────────
+async function saveSessionToFirestore(feedback) {
+  if (!state.user) return;
+  const { collection, addDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+  
+  const ctx = $('contextInput')?.value.trim() || "General Practice";
+  
+  try {
+    await addDoc(collection(state.db, `users/${state.user.uid}/sessions`), {
+      timestamp: serverTimestamp(),
+      context: ctx,
+      transcript: state.conversationLog,
+      analysis: feedback
+    });
+    showToast('Sesi berhasil disimpan!', 'success');
+  } catch (e) {
+    console.error("Firestore save error:", e);
+    showToast('Gagal simpan sesi', 'error');
+  }
+}
+
+async function loadHistory() {
+  if (!state.user) return;
+  const { collection, query, orderBy, getDocs } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+  
+  const listEl = $('historyList');
+  listEl.innerHTML = '<div style="text-align:center; padding:40px;"><div class="loading-spinner"></div></div>';
+
+  try {
+    const q = query(collection(state.db, `users/${state.user.uid}/sessions`), orderBy("timestamp", "desc"));
+    const snapshot = await getDocs(q);
+    
+    if (snapshot.empty) {
+      listEl.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">Belum ada sesi tersimpan</div>';
+      return;
+    }
+
+    listEl.innerHTML = '';
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const div = document.createElement('div');
+      div.className = 'history-item';
+      const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Baru saja';
+      div.innerHTML = `
+        <div class="history-info">
+          <div class="history-date">${date}</div>
+          <div class="history-context">${data.context}</div>
+        </div>
+        <div class="history-score">${data.analysis?.overallScore || 0}</div>
+      `;
+      div.onclick = () => showSessionDetail(data);
+      listEl.appendChild(div);
+    });
+  } catch (e) {
+    console.error("Load history error:", e);
+    listEl.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">Gagal memuat riwayat</div>';
+  }
+}
+
+function showSessionDetail(data) {
+  const detailEl = $('sessionDetail');
+  const contentEl = $('detailContent');
+  detailEl.style.display = 'flex';
+  
+  // Analysis summary
+  let html = `
+    <div style="padding: 24px; background: #fff; border-radius: 24px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+      <h3 style="margin-bottom:12px;">Analisis AI</h3>
+      <div style="font-size: 32px; font-weight: 700; color: var(--primary); margin-bottom: 20px;">${data.analysis?.overallScore}</div>
+      <p style="font-size: 14px; line-height: 1.6; color: #475569;">${data.analysis?.feedback}</p>
+    </div>
+    <h3 style="margin: 24px 0 16px; padding-left: 8px;">Transkrip Chat</h3>
+    <div id="detailChat" style="display: flex; flex-direction: column; gap: 8px;"></div>
+  `;
+  
+  contentEl.innerHTML = html;
+  const chatArea = contentEl.querySelector('#detailChat');
+  
+  data.transcript.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = `msg ${msg.role}`;
+    div.style.display = 'block'; // Ensure they show
+    div.innerHTML = `<div class="msg-bubble">${msg.text}</div>`;
+    chatArea.appendChild(div);
+  });
+}
