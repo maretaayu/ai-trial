@@ -251,7 +251,7 @@ export function useGeminiLive({ onCallEnded, onError }: UseGeminiLiveOptions) {
 
       const pcm = floatTo16BitPCM(input);
       wsRef.current.send(JSON.stringify({
-        realtimeInput: { audio: { mimeType: 'audio/pcm;rate=16000', data: toBase64(pcm.buffer) } },
+        realtimeInput: { audio: { mimeType: 'audio/pcm;rate=16000', data: toBase64(pcm.buffer as ArrayBuffer) } },
       }));
     };
 
