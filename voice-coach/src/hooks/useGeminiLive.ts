@@ -2,7 +2,7 @@ import { useRef, useState, useCallback } from 'react';
 import { ConversationEntry, CallStatus, CallAnalysis } from '../types';
 
 const WS_URL = 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent';
-const API_KEY = 'AIzaSyDz9076a8VK8AaQj4k-_RqqCodm_wzYKoI';
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const OUTPUT_SAMPLE_RATE = 24000;
 const SILENCE_THRESHOLD = 0.01;
 
